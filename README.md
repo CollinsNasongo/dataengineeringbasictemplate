@@ -13,7 +13,7 @@ Apart from the prerequisites, **three steps are all you need to have a fully run
 ### Step 1 — Clone and rename
 
 ```bash
-git clone https://github.com/your-username/general-data-engineering-template.git your-project-name
+git clone https://github.com/CollinsNasongo/general-data-engineering-template.git your-project-name
 cd your-project-name
 ```
 
