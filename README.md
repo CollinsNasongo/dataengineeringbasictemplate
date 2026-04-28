@@ -13,7 +13,7 @@ Apart from the prerequisites, **three steps are all you need to have a fully run
 ### Step 1 — Clone and rename
 
 ```bash
-git clone https://github.com/CollinsNasongo/general-data-engineering-template.git your-project-name
+git clone https://github.com/your-username/general-data-engineering-template.git your-project-name
 cd your-project-name
 ```
 
@@ -52,7 +52,47 @@ logs/
 
 This keeps your secrets and local data files out of version control.
 
-### Step 4 — Start the platform
+### Step 4 — Create empty folders
+
+Git does not track empty folders. Create the required directory structure with `.gitkeep` files so the folder layout is preserved in version control:
+
+**Mac / Linux:**
+```bash
+touch dags/.gitkeep
+touch data/bronze/.gitkeep
+touch data/silver/.gitkeep
+touch data/gold/.gitkeep
+touch logs/.gitkeep
+touch config/.gitkeep
+touch plugins/.gitkeep
+```
+
+**Windows (PowerShell):**
+```powershell
+New-Item dags/.gitkeep -Force
+New-Item data/bronze/.gitkeep -Force
+New-Item data/silver/.gitkeep -Force
+New-Item data/gold/.gitkeep -Force
+New-Item logs/.gitkeep -Force
+New-Item config/.gitkeep -Force
+New-Item plugins/.gitkeep -Force
+```
+
+Then update your `.gitignore` to ignore folder contents but keep the `.gitkeep` files:
+
+```
+# Keep folder structure but ignore contents
+data/bronze/*
+data/silver/*
+data/gold/*
+logs/*
+!data/bronze/.gitkeep
+!data/silver/.gitkeep
+!data/gold/.gitkeep
+!logs/.gitkeep
+```
+
+### Step 5 — Start the platform
 
 ```bash
 make reset
@@ -163,21 +203,12 @@ project/
 │   └── gold/                      # Output files
 ├── etl/
 │   ├── config/
-│   │   ├── __init__.py
 │   │   └── paths.py               # Centralised path helpers
-│   ├── extract/
-│   │   └── extract_source.py      # Source extraction logic
-│   ├── load/
-│   │   └── load_to_db.py          # Load gold tables to Postgres
-│   ├── pipelines/
-│   │   └── patient_pipeline.py    # Example pipeline definition
-│   ├── transform/
-│   │   ├── bronze.py              # Bronze layer transforms
-│   │   ├── silver.py              # Silver layer transforms
-│   │   └── gold.py                # Gold layer aggregations
-│   └── utils/
-│       ├── logging.py             # Shared logging utilities
-│       └── validation.py          # Data validation helpers
+│   ├── extract/                   # Add source extraction logic here
+│   ├── load/                      # Add database load logic here
+│   ├── pipelines/                 # Add pipeline definitions here
+│   ├── transform/                 # Add bronze / silver / gold transforms here
+│   └── utils/                     # Add shared utilities here
 ├── logs/                          # Airflow logs (not committed)
 ├── .env                           # Secrets — never commit this
 ├── .env.template                  # Safe template to commit
@@ -361,6 +392,17 @@ make logs service=airflow-dag-processor
 - Database ports are not exposed to the host
 - Airflow and Metabase bind to `127.0.0.1` only
 - `.env` is excluded from version control via `.gitignore`
+
+---
+
+## References & Acknowledgements
+
+- [Apache Airflow](https://airflow.apache.org/) — workflow orchestration
+- [Metabase](https://www.metabase.com/) — open-source BI and dashboarding
+- [PostgreSQL](https://www.postgresql.org/) — open-source relational database
+- [Redis](https://redis.io/) — in-memory message broker
+- [pgAdmin](https://www.pgadmin.org/) — PostgreSQL administration UI
+- [Docker](https://www.docker.com/) — containerisation platform
 
 ---
 
