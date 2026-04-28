@@ -19,6 +19,21 @@ cd your-project-name
 
 Rename the folder to match your project. Everything else is already in place.
 
+**Detach from the template repo and point to your own:**
+
+```bash
+# Remove the link to the template repo
+git remote remove origin
+
+# Create a new repo on GitHub, then point to it
+git remote add origin https://github.com/your-username/your-project-name.git
+
+# Push to your own repo
+git push -u origin main
+```
+
+This ensures your changes go to your own GitHub repo and the template stays untouched.
+
 ### Step 2 — Configure your `.env`
 
 ```bash
